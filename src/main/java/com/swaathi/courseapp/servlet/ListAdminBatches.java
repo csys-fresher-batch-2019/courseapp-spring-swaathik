@@ -18,7 +18,7 @@ public class ListAdminBatches extends HttpServlet {
 	 BatchDAO dao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			 List<BatchClass> list = dao.displayBatches();
+			 List<BatchClass> list = dao.findAll();
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("adminBatches.jsp");
 			dispatcher.forward(request, response);

@@ -21,7 +21,7 @@ import com.swaathi.courseapp.util.ConnectionUtil;
 @Repository
 public class CourseImplements implements CourseDAO{
 	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(IndexController.class);
-	public void addCourses(CourseClass course) throws DBException {
+	public void save(CourseClass course) throws DBException {
 		String sql = "insert into courses (course_code,course_name,course_fee,course_duration_days,pre_req) values(?,?,?,?,?)";
 		try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
 			pst.setInt(1, course.getCourseCode());
@@ -38,7 +38,7 @@ public class CourseImplements implements CourseDAO{
 		
 	}
 
-	public void updateCourses(int courseCode) throws DBException  {
+	public void update(int courseCode) throws DBException  {
 		String sql = "update courses set course_duration_days=45 where course_code=?";
 		
 		
@@ -53,7 +53,7 @@ public class CourseImplements implements CourseDAO{
 		
 	}
 
-	public void deleteCourses(int courseCode) throws DBException {
+	public void delete(int courseCode) throws DBException {
 		String sql = "delete from courses where course_code=?";
 		try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
 			pst.setInt(1,courseCode);
@@ -65,7 +65,7 @@ public class CourseImplements implements CourseDAO{
 		}
 	}
 
-	public List<CourseClass> orderByCourseName() throws DBException  {
+	public List<CourseClass> findAll() throws DBException  {
 		
 		List<CourseClass> c = new ArrayList<>();
 		String sql = "select course_name,course_code,course_fee,course_duration_days,pre_req,course_image from courses";
@@ -105,7 +105,7 @@ public class CourseImplements implements CourseDAO{
 	}
 
 	@Override
-	public List<CourseClass> orderBy(String courseName) throws DBException  {
+	public List<CourseClass> findByCourseName(String courseName) throws DBException  {
 		List<CourseClass> list = new ArrayList<>();
 		String sql = "select course_code,course_name,course_fee,course_duration_days,pre_req from courses where course_name=?";	
 		try(Connection connection = ConnectionUtil.getConnection();
@@ -140,7 +140,7 @@ public class CourseImplements implements CourseDAO{
 	  		return list;
 	}
 
-	public int getCourseFee(int courseCode) throws DBException {
+	public int findByCourseCode(int courseCode) throws DBException {
 		int courseFee=0;
 		List<CourseClass> list = new ArrayList<>();
 		String sql = "select course_fee from courses where course_code=?";	

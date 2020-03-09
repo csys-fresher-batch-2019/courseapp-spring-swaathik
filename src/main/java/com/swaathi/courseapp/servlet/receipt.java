@@ -32,7 +32,7 @@ public class receipt extends HttpServlet {
 		b1.setReMarks(remark);
 		PaymentDAO dao = DAOFactory.getPaymentDAO();
 		try {
-			dao.addPayments(b1);
+			dao.save(b1);
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

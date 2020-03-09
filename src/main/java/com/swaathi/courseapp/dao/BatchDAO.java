@@ -9,16 +9,16 @@ import com.swaathi.courseapp.exception.DBException;
 public interface BatchDAO {
 	
 	
-	void addBatches(BatchClass batch) throws DBException;
+	void save(BatchClass batch) throws DBException;
 	
 
-	List<BatchClass>displayBatchCodeCourseCode(String courseName) throws SQLException, DBException ;
+	List<BatchClass>findByCourseName(String courseName) throws SQLException, DBException ;
 	
-	List<BatchClass> displayBatches() throws DBException;
+	List<BatchClass> findAll() throws DBException;
 	
-	void deleteBatches (int batchCode) throws DBException;
+	void delete (int batchCode) throws DBException;
 	
-	void updateBatches(int receiptNo) throws DBException ;
+	void update(int receiptNo) throws DBException ;
 	
 
 }

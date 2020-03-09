@@ -13,10 +13,6 @@ import com.swaathi.courseapp.util.Logger;
 @Service
 public class UserService {
 	private static final Logger LOGGER = Logger.getInstance();
-
-//	private UserService() {
-//	    throw new IllegalStateException("Utility class");
-//	  }
 	public static boolean login(StudentClass user)  {
 		try(Connection con = ConnectionUtil.getConnection();CallableStatement stmt=con.prepareCall("{call login_procedure(?,?,?)}")) {
 			stmt.setString(1,user.getUserName());

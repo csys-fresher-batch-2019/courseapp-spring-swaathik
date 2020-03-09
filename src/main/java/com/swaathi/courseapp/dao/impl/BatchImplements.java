@@ -23,7 +23,7 @@ import com.swaathi.courseapp.util.ConnectionUtil;
 @Repository
 public class BatchImplements implements BatchDAO {
 	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(IndexController.class);
-	public void addBatches(BatchClass batch) throws DBException {
+	public void save(BatchClass batch) throws DBException {
 		String sql = "insert into Batches(batch_code,course_code,course_name,starting_date,end_date) values(?,?,?,?,?)";
 		try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
 			pst.setInt(1, batch.getBatchCode());
@@ -40,7 +40,7 @@ public class BatchImplements implements BatchDAO {
 			throw new DBException(ErrorConstant.INVALID_ADD);
 		}
 	}
-	public void deleteBatches(int batchCode) throws DBException {
+	public void delete(int batchCode) throws DBException {
 		String sql = "delete from batches where batch_code = ?";
 		try (Connection connection = ConnectionUtil.getConnection(); PreparedStatement pst = connection.prepareStatement(sql);)		
 		{
@@ -53,7 +53,7 @@ public class BatchImplements implements BatchDAO {
 			
 		}
 	}
-	public void updateBatches(int courseCode) throws DBException {
+	public void update(int courseCode) throws DBException {
 		String sql = "update batches set batch_code=121 where course_code=?";
 		try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
 			pst.setInt(1,courseCode);
@@ -67,7 +67,7 @@ public class BatchImplements implements BatchDAO {
 	}
 		
 
-	public List<BatchClass> displayBatchCodeCourseCode(String courseName) throws SQLException, DBException {
+	public List<BatchClass> findByCourseName(String courseName) throws SQLException, DBException {
 		List<BatchClass> b = new ArrayList<>();
 		String sql = "select batch_code,starting_date,end_date from batches where course_name=?";
 		try(Connection connection = ConnectionUtil.getConnection();
@@ -92,7 +92,7 @@ public class BatchImplements implements BatchDAO {
 		return b;
 }
 	}
-		public List<BatchClass> displayBatches() throws DBException {
+		public List<BatchClass> findAll() throws DBException {
 			List<BatchClass> r = new ArrayList<>();
 			String sql = "select batch_code,course_code,course_name,starting_date,end_date from batches";
 			try(Connection connection = ConnectionUtil.getConnection();Statement stmt = connection.createStatement();ResultSet rs = stmt.executeQuery(sql)) {

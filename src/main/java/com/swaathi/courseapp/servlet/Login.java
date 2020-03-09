@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.swaathi.courseapp.dao.impl.StudentImplementation;
 import com.swaathi.courseapp.domain.StudentClass;
+import com.swaathi.courseapp.service.UserService;
 
 @SuppressWarnings("serial")
 @WebServlet("/Login")
@@ -30,8 +31,8 @@ public class Login extends HttpServlet {
 		user.setPassWord(password);
 		StudentImplementation dao = new StudentImplementation();
 		try {
-			status = user.login(user);
-			Integer uid = dao.getUserId(user.getUserName(), user.getPassWord());
+			status = UserService.login(user);
+			Integer uid = dao.findByUserNameAndPassword(user.getUserName(), user.getPassWord());
 			if(uid!=null) {
 				HttpSession sess = request.getSession();
 				sess.setAttribute("admNo", uid);

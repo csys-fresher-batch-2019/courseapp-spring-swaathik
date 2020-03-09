@@ -25,7 +25,7 @@ public class ListAdminCourses extends HttpServlet {
 	CourseDAO dao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			List<CourseClass> list = dao.orderByCourseName();
+			List<CourseClass> list = dao.findAll();
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("adminCourse.jsp");
 			dispatcher.forward(request, response);

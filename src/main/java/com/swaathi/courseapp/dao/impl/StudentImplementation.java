@@ -23,7 +23,7 @@ import com.swaathi.courseapp.util.ConnectionUtil;
 public class StudentImplementation implements StudentDAO {
 	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(IndexController.class);
 
-	public int addStudents(StudentClass student) throws DBException  {
+	public int save(StudentClass student) throws DBException  {
 		int rows = 0;
 		String sql = "insert into students(adm_no,full_name,father_name_or_guardian_name,email_id,phone_no,date_of_joining,stud_user_name,stud_password)values(adm_no_sq.nextval,?,?,?,?,?,?,?)";
 		try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
@@ -43,7 +43,7 @@ public class StudentImplementation implements StudentDAO {
 		return rows;
 	}
 
-	public void updateStudent(int admNo) throws DBException  {
+	public void update(int admNo) throws DBException  {
 			String sql = "update Students set email_id = 'anusha@gmail.com' where adm_no=?";
 			try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
 				pst.setInt(1, admNo);
@@ -57,7 +57,7 @@ public class StudentImplementation implements StudentDAO {
 
 	
 
-	public void deleteStudent(int admNo) throws DBException  {
+	public void delete(int admNo) throws DBException  {
 		String sql = "update Students set student_active = 0 where adm_no=?";
 		
 		try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
@@ -72,7 +72,7 @@ public class StudentImplementation implements StudentDAO {
 		
 	}
 
-	public List<StudentClass> displayStudents() throws DBException {
+	public List<StudentClass> findAll() throws DBException {
 		List<StudentClass> c = new ArrayList<>();
 		String sql = "select adm_no,full_name,father_name_or_guardian_name,email_id,phone_no,date_of_joining,stud_user_name from students";
 		try(Connection connection = ConnectionUtil.getConnection();Statement stmt = connection.createStatement();ResultSet rs = stmt.executeQuery(sql)) {
@@ -112,7 +112,7 @@ public class StudentImplementation implements StudentDAO {
 		return c;
 	}
 	
-	public int getUserId(String userName, String passWord) throws DBException {
+	public int findByUserNameAndPassword(String userName, String passWord) throws DBException {
 		String sql="select adm_no from students where stud_user_name=?and stud_password=?";
 		System.out.println(sql);
 		int v= 0;

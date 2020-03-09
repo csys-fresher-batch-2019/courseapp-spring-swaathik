@@ -20,7 +20,7 @@ public class ListAdminEnrollStudents extends HttpServlet {
 	PaymentDAO dao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			List<PaymentClass> list = dao.displayEnroll();
+			List<PaymentClass> list = dao.findAll();
 		
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("displayEnrollStudents.jsp");

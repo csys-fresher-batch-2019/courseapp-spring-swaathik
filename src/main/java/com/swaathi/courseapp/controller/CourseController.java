@@ -38,7 +38,7 @@ StudentClass s1 = new StudentClass();
 		s1.setUserName(userName);
 		s1.setPassWord(password);
 		s1.setPhoneNo(phNo);
-		int a = dao.addStudents(s1);
+		int a = dao.save(s1);
 		if(a==1) {
 			msg.setInfoMessage("Registered Successfully!!!");
 		}
@@ -51,7 +51,7 @@ StudentClass s1 = new StudentClass();
 	@GetMapping("/viewCourse")
 	public List<CourseClass> viewCourse() throws DBException
 	{
-List<CourseClass>  s = dao1.orderByCourseName();
+List<CourseClass>  s = dao1.findAll();
 		return s;	
 	}
 	
@@ -81,7 +81,7 @@ List<CourseClass>  s = dao1.orderByCourseName();
 @GetMapping("/viewBatch")
 public List<BatchClass> viewBatch() throws DBException
 {
-List <BatchClass>  a = dao2.displayBatches();
+List <BatchClass>  a = dao2.findAll();
 return a;
 		
 }

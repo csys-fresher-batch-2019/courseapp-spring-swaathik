@@ -17,7 +17,7 @@ body {
 				<center>My Profile</center>
 			</h2></font> <jsp:include page="logout.jsp"></jsp:include> <%
  	StudentDAO dao = DAOFactory.getStudentDAO();
- 	List<StudentClass> list = dao.displayStudents();
+  	List<StudentClass> list = dao.findAll();
  %>
 		<center>
 			<font color="black"><table border="1">

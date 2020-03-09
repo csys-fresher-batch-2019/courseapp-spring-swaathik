@@ -23,7 +23,7 @@ public class ListCourses extends HttpServlet {
 	CourseDAO dao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			List<CourseClass> list = dao.orderByCourseName();
+			List<CourseClass> list = dao.findAll();
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("course.jsp");
 			dispatcher.forward(request, response);

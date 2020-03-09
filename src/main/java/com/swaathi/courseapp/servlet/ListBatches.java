@@ -29,11 +29,11 @@ public class ListBatches extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String courseName = request.getParameter("course_name");
-			List<CourseClass> list = dao.orderBy(courseName); 
+			List<CourseClass> list = dao.findByCourseName(courseName); 
 			CourseClass course = list.get(0);
 			System.out.println("CourseDetail" +  course);
 			
-			List<BatchClass> l = b.displayBatchCodeCourseCode(courseName);
+			List<BatchClass> l = b.findByCourseName(courseName);
 			System.out.println("BATCH_CLASS" + l);
 			 request.setAttribute("BATCH_CLASS", l);
             request.setAttribute("COURSE_DETAIL", course);

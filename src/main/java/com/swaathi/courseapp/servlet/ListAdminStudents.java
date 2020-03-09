@@ -20,7 +20,7 @@ public class ListAdminStudents extends HttpServlet {
 	StudentDAO dao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			List<StudentClass> list =dao.displayStudents();
+			List<StudentClass> list =dao.findAll();
 		
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("student.jsp");

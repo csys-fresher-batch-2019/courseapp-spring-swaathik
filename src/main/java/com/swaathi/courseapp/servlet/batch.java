@@ -41,13 +41,11 @@ public class batch extends HttpServlet {
 				 b1.setEndDate(enDate);
 				 BatchDAO dao = DAOFactory.getBatchDAO();
 					try {
-						dao.addBatches(b1);
+						dao.save(b1);
 						response.sendRedirect("ADD.jsp");
 					} catch (DBException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					//response.sendRedirect("ADD.jsp");
 		
 	}
 
