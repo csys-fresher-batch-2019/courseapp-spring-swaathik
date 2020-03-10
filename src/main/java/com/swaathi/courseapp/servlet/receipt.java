@@ -12,6 +12,7 @@ import com.swaathi.courseapp.dao.PaymentDAO;
 import com.swaathi.courseapp.domain.PaymentClass;
 import com.swaathi.courseapp.exception.DBException;
 import com.swaathi.courseapp.factory.DAOFactory;
+@SuppressWarnings("serial")
 @WebServlet("/receipt")
 
 public class receipt extends HttpServlet {
@@ -34,7 +35,6 @@ public class receipt extends HttpServlet {
 		try {
 			dao.save(b1);
 		} catch (DBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		response.sendRedirect("EnrollMent.jsp");

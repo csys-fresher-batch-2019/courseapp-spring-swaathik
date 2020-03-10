@@ -38,19 +38,16 @@ public class course extends HttpServlet {
 		c1.setCourseName(name);
 		c1.setCourseDurationDays(days);
 		c1.setPreReq(preReq);
-		// dao.enrollcourse
 		CourseDAO dao = DAOFactory.getCourseDAO();
 		try {
 			dao.save(c1);
 		} catch (DBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		HttpSession ses = request.getSession();
 		ses.setAttribute("name", course);
 		response.sendRedirect("ADD.jsp");
-		// forward - page - payment.jsp
 
 	}
 }

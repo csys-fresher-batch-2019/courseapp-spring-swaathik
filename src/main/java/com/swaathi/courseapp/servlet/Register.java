@@ -16,6 +16,7 @@ import com.swaathi.courseapp.dao.StudentDAO;
 import com.swaathi.courseapp.domain.StudentClass;
 import com.swaathi.courseapp.exception.DBException;
 import com.swaathi.courseapp.factory.DAOFactory;
+import com.swaathi.courseapp.service.UserService;
 
 @SuppressWarnings("serial")
 @WebServlet("/Register")
@@ -65,8 +66,7 @@ public class Register extends HttpServlet {
 
 			else {
 				System.out.println(s1);
-				StudentDAO dao = DAOFactory.getStudentDAO();
-				dao.save(s1);   //service.save(s1) ;   validate(); dao.save();
+				UserService.registration(s1);
 				response.sendRedirect("login.jsp");
 			}
 

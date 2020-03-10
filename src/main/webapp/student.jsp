@@ -40,10 +40,10 @@ body {
 							<td>${student.admNo}</td>
 							<td>${student.fullName}</td>
 							<td>${student.fatherNameOrGuardianName}</td>
+							<td>${student.emailId}</td>
 							<td>${student.phoneNo}</td>
 							<td>${student.dateOfJoining}</td>
 							<td>${student.userName}</td>
-							<td>${student.passWord}</td>
 						</tr>
 						</c:forEach>
 					</tbody>

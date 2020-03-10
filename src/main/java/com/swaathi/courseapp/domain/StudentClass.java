@@ -1,12 +1,9 @@
 package com.swaathi.courseapp.domain;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.Types;
 import java.time.LocalDate;
 
-import com.swaathi.courseapp.util.ConnectionUtil;
 import com.swaathi.courseapp.util.Logger;
+
 public class StudentClass {
 	@Override
 	public int hashCode() {
@@ -22,6 +19,7 @@ public class StudentClass {
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -70,9 +68,11 @@ public class StudentClass {
 			return false;
 		return true;
 	}
+
 	public String getFatherNameOrGuardianName() {
 		return fatherNameOrGuardianName;
 	}
+
 	private static final Logger LOGGER = Logger.getInstance();
 	private int admNo;
 	private String fullName;
@@ -82,62 +82,76 @@ public class StudentClass {
 	private String userName;
 	private String passWord;
 	private LocalDate dateOfJoining;
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getPassWord() {
 		return passWord;
 	}
+
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
 	}
-	
+
 	public String getPhoneNo() {
 		return phoneNo;
 	}
+
 	public int getAdmNo() {
 		return admNo;
 	}
+
 	public void setAdmNo(int admNo) {
 		this.admNo = admNo;
 	}
+
 	public String getFullName() {
 		return fullName;
 	}
+
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+
 	public String string() {
 		return fatherNameOrGuardianName;
 	}
+
 	public void setFatherNameOrGuardianName(String fatherNameOrGuardianName) {
 		this.fatherNameOrGuardianName = fatherNameOrGuardianName;
 	}
+
 	public String getEmailId() {
 		return emailId;
 	}
+
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+
 	public LocalDate getDateOfJoining() {
 		return dateOfJoining;
 	}
+
 	public void setDateOfJoining(LocalDate doj) {
 		this.dateOfJoining = doj;
 	}
+
 	public void setPhoneNo(String phoneNo) {
-		if(phoneNo.length()<10 || phoneNo.length()>10)
+		if (phoneNo.length() < 10 || phoneNo.length() > 10)
 			throw new IllegalArgumentException("Invalid Phone Number!!!");
 		this.phoneNo = phoneNo;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "StudentClass [ fullName="
-				+ fullName + ", fatherNameOrGuardianName=" + fatherNameOrGuardianName + ", emailId=" + emailId
-				+ ", phoneNo=" + phoneNo + ", dateOfJoining=" + dateOfJoining + "]";
+		return "StudentClass [ fullName=" + fullName + ", fatherNameOrGuardianName=" + fatherNameOrGuardianName
+				+ ", emailId=" + emailId + ", phoneNo=" + phoneNo + ", dateOfJoining=" + dateOfJoining + "]";
 	}
-	}
+}

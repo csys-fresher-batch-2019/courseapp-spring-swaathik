@@ -14,6 +14,7 @@ import com.swaathi.courseapp.dao.BatchDAO;
 import com.swaathi.courseapp.domain.BatchClass;
 import com.swaathi.courseapp.exception.DBException;
 import com.swaathi.courseapp.factory.DAOFactory;
+@SuppressWarnings("serial")
 @WebServlet("/batch")
 
 public class batch extends HttpServlet {

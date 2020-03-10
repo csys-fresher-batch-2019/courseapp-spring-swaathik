@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.swaathi.courseapp.dao.StudentDAO;
 import com.swaathi.courseapp.dao.BatchDAO;
 import com.swaathi.courseapp.dao.CourseDAO;
+import com.swaathi.courseapp.dao.PaymentDAO;
 import com.swaathi.courseapp.domain.BatchClass;
 import com.swaathi.courseapp.domain.CourseClass;
+import com.swaathi.courseapp.domain.PaymentClass;
 import com.swaathi.courseapp.domain.StudentClass;
 import com.swaathi.courseapp.dto.MessageDTO;
 import com.swaathi.courseapp.exception.DBException;
+import com.swaathi.courseapp.service.UserService;
 
 @RestController
 @RequestMapping("api")
@@ -26,6 +29,10 @@ public class CourseController {
 	CourseDAO dao1;
 	@Autowired
 	BatchDAO dao2;
+	@Autowired
+	StudentDAO dao3;
+	@Autowired
+	PaymentDAO dao4;
 	@GetMapping("/Register")
 	public MessageDTO Register(@RequestParam("name") String name,@RequestParam("fname")String fatherName,@RequestParam("mail")String emailId,@RequestParam("doj")String doj,@RequestParam("user")String userName,@RequestParam("pass")String password,@RequestParam("phNo")String phNo) throws DBException {
 StudentClass s1 = new StudentClass();
@@ -64,7 +71,7 @@ List<CourseClass>  s = dao1.findAll();
 		user.setPassWord(pass);
 		
 		try {
-			status = user.login(user);
+			status = UserService.login(user);
 			System.out.println(status);
 		}
 		catch(Exception e) {
@@ -85,7 +92,21 @@ List <BatchClass>  a = dao2.findAll();
 return a;
 		
 }
-				
+
+@GetMapping("/viewStudents")
+public List<StudentClass> viewStudents() throws DBException
+{
+List <StudentClass>  a = dao3.findAll();
+return a;
+		
+}	
+@GetMapping("/viewEnrolledStudents")
+public List<PaymentClass> viewEnrolledStudents() throws DBException
+{
+List <PaymentClass>  a = dao4.findAll();
+return a;
+		
+}	
 	
 }
 

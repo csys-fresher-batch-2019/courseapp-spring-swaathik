@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,127 +24,117 @@ import com.swaathi.courseapp.util.ConnectionUtil;
 public class StudentImplementation implements StudentDAO {
 	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(IndexController.class);
 
-	public int save(StudentClass student) throws DBException  {
+	public int save(StudentClass student) throws DBException {
 		int rows = 0;
 		String sql = "insert into students(adm_no,full_name,father_name_or_guardian_name,email_id,phone_no,date_of_joining,stud_user_name,stud_password)values(adm_no_sq.nextval,?,?,?,?,?,?,?)";
-		try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement pst = connection.prepareStatement(sql);) {
 			pst.setString(1, student.getFullName());
 			pst.setString(2, student.getFatherNameOrGuardianName());
 			pst.setString(3, student.getEmailId());
 			pst.setString(4, student.getPhoneNo());
-			pst.setDate(5,Date.valueOf(student.getDateOfJoining()));
+			pst.setDate(5, Date.valueOf(student.getDateOfJoining()));
 			pst.setString(6, student.getUserName());
 			pst.setString(7, student.getPassWord());
-			 rows = pst.executeUpdate();
-			Logger.info("No of rows inserted : "+rows);
-		} catch (Exception e) {
+			rows = pst.executeUpdate();
+			Logger.info("No of rows inserted : " + rows);
+		} catch (SQLException e) {
 			Logger.debug(e.getMessage());
 			throw new DBException(ErrorConstant.INVALID_ADD);
 		}
 		return rows;
 	}
 
-	public void update(int admNo) throws DBException  {
-			String sql = "update Students set email_id = 'anusha@gmail.com' where adm_no=?";
-			try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
-				pst.setInt(1, admNo);
-				int rows = pst.executeUpdate();
-				Logger.info("No of rows updated : "+rows);
-			} catch (Exception e) {
-				Logger.debug(e.getMessage());
-				throw new DBException(ErrorConstant.INVALID_UPDATE);
-			}
-	}
-
-	
-
-	public void delete(int admNo) throws DBException  {
-		String sql = "update Students set student_active = 0 where adm_no=?";
-		
-		try(Connection connection = ConnectionUtil.getConnection();PreparedStatement pst = connection.prepareStatement(sql);) {
+	public void update(int admNo, String emailId) throws DBException {
+		String sql = "update Students set email_id = ? where adm_no=?";
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement pst = connection.prepareStatement(sql);) {
 			pst.setInt(1, admNo);
+			pst.setString(2, emailId);
 			int rows = pst.executeUpdate();
-			Logger.info("No of rows deleted : "+rows);
-		} catch (Exception e) {
+			Logger.info("No of rows updated : " + rows);
+		} catch (SQLException e) {
 			Logger.debug(e.getMessage());
 			throw new DBException(ErrorConstant.INVALID_UPDATE);
 		}
-		
-		
+	}
+
+	public void delete(int admNo) throws DBException {
+		String sql = "update Students set student_active = 0 where adm_no=?";
+
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement pst = connection.prepareStatement(sql);) {
+			pst.setInt(1, admNo);
+			int rows = pst.executeUpdate();
+			Logger.info("No of rows deleted : " + rows);
+		} catch (SQLException e) {
+			Logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_UPDATE);
+		}
+
 	}
 
 	public List<StudentClass> findAll() throws DBException {
 		List<StudentClass> c = new ArrayList<>();
 		String sql = "select adm_no,full_name,father_name_or_guardian_name,email_id,phone_no,date_of_joining,stud_user_name from students";
-		try(Connection connection = ConnectionUtil.getConnection();Statement stmt = connection.createStatement();ResultSet rs = stmt.executeQuery(sql)) {
-			
+		try (Connection connection = ConnectionUtil.getConnection();
+				Statement stmt = connection.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
+
 			while (rs.next()) {
 				int admNo = rs.getInt("adm_no");
-				Logger.debug("Admission Number : "+admNo);
+				Logger.debug("Admission Number : " + admNo);
 				String fullName = rs.getString("full_name");
-				Logger.debug("Full Name : "+fullName);
+				Logger.debug("Full Name : " + fullName);
 				String fatherNameOrGuardianName = rs.getString("father_name_or_guardian_name");
-				Logger.debug("FatherName Or GuardianName : "+fatherNameOrGuardianName);
+				Logger.debug("FatherName Or GuardianName : " + fatherNameOrGuardianName);
 				String username = rs.getString("stud_user_name");
-				Logger.debug("User Name : "+username);
+				Logger.debug("User Name : " + username);
 				String emailId = rs.getString("email_id");
-				Logger.debug("Email Id : "+emailId);
+				Logger.debug("Email Id : " + emailId);
 				String phoneNo = rs.getString("phone_No");
-				Logger.debug("Phone Number : "+phoneNo);
+				Logger.debug("Phone Number : " + phoneNo);
 				LocalDate dateOfJoining = rs.getDate("date_of_joining").toLocalDate();
-				Logger.debug("DateOfJoining : "+dateOfJoining);
-				
-				
+				Logger.debug("DateOfJoining : " + dateOfJoining);
+
 				StudentClass student = new StudentClass();
 				student.setAdmNo(admNo);
 				student.setFullName(fullName);
 				student.setFatherNameOrGuardianName(fatherNameOrGuardianName);
 				student.setEmailId(emailId);
-	            student.setDateOfJoining(dateOfJoining);	
-	            student.setPhoneNo(phoneNo);
-	            student.setUserName(username);
+				student.setDateOfJoining(dateOfJoining);
+				student.setPhoneNo(phoneNo);
+				student.setUserName(username);
 				c.add(student);
 			}
-		} 
-		catch (Exception e) {
+		} catch (SQLException e) {
 			Logger.debug(e.getMessage());
 			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
 		return c;
 	}
-	
+
 	public int findByUserNameAndPassword(String userName, String passWord) throws DBException {
-		String sql="select adm_no from students where stud_user_name=?and stud_password=?";
+		String sql = "select adm_no from students where stud_user_name=?and stud_password=?";
 		System.out.println(sql);
-		int v= 0;
-		try(Connection connection=ConnectionUtil.getConnection();
-		    PreparedStatement pst = connection.prepareStatement(sql);){
-		      pst.setString(1,userName);
-		      pst.setString(2,passWord);
-		      
-		      try(ResultSet row =pst. executeQuery())
-		{
-		               if(row.next()) {
-		              v= row.getInt("adm_no");
-		              
-		               }
-		}  }
-		catch(Exception e)
-		{
-		       Logger.error(e.getMessage());
-		       throw new DBException(ErrorConstant.INVALID_SELECT);
-		       }
-		               return v;
+		int v = 0;
+		try (Connection connection = ConnectionUtil.getConnection();
+				PreparedStatement pst = connection.prepareStatement(sql);) {
+			pst.setString(1, userName);
+			pst.setString(2, passWord);
 
+			try (ResultSet row = pst.executeQuery()) {
+				if (row.next()) {
+					v = row.getInt("adm_no");
 
-
+				}
+			}
+		} catch (SQLException e) {
+			Logger.error(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
+		return v;
 
+	}
 
-
-		}
-	
-
-
-	
-
+}

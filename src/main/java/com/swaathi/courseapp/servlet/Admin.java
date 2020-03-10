@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.swaathi.courseapp.domain.AdminClass;
+@SuppressWarnings("serial")
 @WebServlet("/Admin")
 public class Admin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,9 +22,9 @@ public class Admin extends HttpServlet {
 		
 		AdminClass user = new AdminClass();
 		System.out.println("Enter UserName : "+username);
-		user.setAdminName(username);
+		user.setUserName(username);
 		System.out.println("Enter Password : "+password);
-		user.setAdminPassword(password);
+		user.setPassword(password);
 		
 		if(username.equals("Swaathi")&&password.equals("12345"))
 			response.sendRedirect("viewAdmin.jsp");
