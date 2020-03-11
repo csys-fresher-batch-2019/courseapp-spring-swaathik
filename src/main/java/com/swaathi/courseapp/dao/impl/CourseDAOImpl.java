@@ -11,18 +11,17 @@ import java.util.List;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.swaathi.courseapp.controller.IndexController;
 import com.swaathi.courseapp.dao.CourseDAO;
-import com.swaathi.courseapp.domain.CourseClass;
+import com.swaathi.courseapp.domain.Course;
 import com.swaathi.courseapp.exception.DBException;
-import com.swaathi.courseapp.exception.ErrorConstant;
 import com.swaathi.courseapp.util.ConnectionUtil;
+import com.swaathi.courseapp.util.ErrorConstant;
 
 @Repository
-public class CourseImplements implements CourseDAO {
-	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(IndexController.class);
+public class CourseDAOImpl implements CourseDAO {
+	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(CourseDAOImpl.class);
 
-	public void save(CourseClass course) throws DBException {
+	public void save(Course course) throws DBException {
 		String sql = "insert into courses (course_code,course_name,course_fee,course_duration_days,pre_req) values(?,?,?,?,?)";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql);) {
@@ -45,8 +44,8 @@ public class CourseImplements implements CourseDAO {
 
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql);) {
-			pst.setInt(1, courseCode);
-			pst.setInt(2, courseDurationDays);
+			pst.setInt(1, courseDurationDays);
+			pst.setInt(2, courseCode);
 			int rows = pst.executeUpdate();
 			Logger.info("No of rows Updated : " + rows);
 		} catch (SQLException e) {
@@ -69,9 +68,9 @@ public class CourseImplements implements CourseDAO {
 		}
 	}
 
-	public List<CourseClass> findAll() throws DBException {
+	public List<Course> findAll() throws DBException {
 
-		List<CourseClass> c = new ArrayList<>();
+		List<Course> c = new ArrayList<>();
 		String sql = "select course_name,course_code,course_fee,course_duration_days,pre_req,course_image from courses";
 
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -80,19 +79,13 @@ public class CourseImplements implements CourseDAO {
 
 			while (rs.next()) {
 				String cName = rs.getString("course_name");
-				Logger.debug("Course Name : " + cName);
 				int courseCode = rs.getInt("course_code");
-				Logger.debug("Course Code : " + courseCode);
 				int courseFee = rs.getInt("course_fee");
-				Logger.debug("Course Fee : " + courseFee);
 				int courseDurationDays = rs.getInt("course_duration_days");
-				Logger.debug("Course Duration(days) : " + courseDurationDays);
 				String preReq = rs.getString("pre_req");
-				Logger.debug("Pre Requisite : " + preReq);
 				String courseImage = rs.getString("course_image");
-				Logger.debug("Course Image : " + courseImage);
 
-				CourseClass course = new CourseClass();
+				Course course = new Course();
 				course.setCourseName(cName);
 				course.setCourseCode(courseCode);
 				course.setCourseFee(courseFee);
@@ -109,8 +102,8 @@ public class CourseImplements implements CourseDAO {
 	}
 
 	@Override
-	public List<CourseClass> findByCourseName(String courseName) throws DBException {
-		List<CourseClass> list = new ArrayList<>();
+	public List<Course> findByCourseName(String courseName) throws DBException {
+		List<Course> list = new ArrayList<>();
 		String sql = "select course_code,course_name,course_fee,course_duration_days,pre_req from courses where course_name=?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -128,7 +121,7 @@ public class CourseImplements implements CourseDAO {
 					Logger.debug("PreRequisite" + preReq);
 					int courseCode = rs.getInt("course_code");
 					Logger.debug("CourseCode" + courseCode);
-					CourseClass course = new CourseClass();
+					Course course = new Course();
 					course.setCourseFee(courseFee);
 					course.setCourseDurationDays(courseDurationDays);
 					course.setPreReq(preReq);
@@ -146,17 +139,17 @@ public class CourseImplements implements CourseDAO {
 
 	public int findByCourseCode(int courseCode) throws DBException {
 		int courseFee = 0;
-		List<CourseClass> list = new ArrayList<>();
+		List<Course> list = new ArrayList<>();
 		String sql = "select course_fee from courses where course_code=?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
 			pst.setInt(1, courseCode);
 			try (ResultSet rs = pst.executeQuery()) {
 
-				while (rs.next()) {
+				if (rs.next()) {
 					courseFee = rs.getInt("course_fee");
 					Logger.debug("CourseFee" + courseFee);
-					CourseClass course = new CourseClass();
+					Course course = new Course();
 					course.setCourseFee(courseFee);
 					list.add(course);
 				}

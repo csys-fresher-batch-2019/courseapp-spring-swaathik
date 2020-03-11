@@ -2,7 +2,7 @@ package com.swaathi.courseapp.domain;
 
 import java.time.LocalDate;
 
-public class BatchClass {
+public class Batch {
 	private int batchCode;
 	private int courseCode;
 	private String courseName;

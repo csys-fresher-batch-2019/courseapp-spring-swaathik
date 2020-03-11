@@ -9,29 +9,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.swaathi.courseapp.domain.AdminClass;
+import com.swaathi.courseapp.domain.Admin;
+
 @SuppressWarnings("serial")
 @WebServlet("/Admin")
-public class Admin extends HttpServlet {
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
+public class AdminServlet extends HttpServlet {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		
-		AdminClass user = new AdminClass();
-		System.out.println("Enter UserName : "+username);
+
+		Admin user = new Admin();
+		System.out.println("Enter UserName : " + username);
 		user.setUserName(username);
-		System.out.println("Enter Password : "+password);
+		System.out.println("Enter Password : " + password);
 		user.setPassword(password);
-		
-		if(username.equals("Swaathi")&&password.equals("12345"))
+
+		if (username.equals("Swaathi") && password.equals("12345"))
 			response.sendRedirect("viewAdmin.jsp");
 		else {
-			request.setAttribute("Error Message","Invalid Login");
-		RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
-		dispatcher.forward(request,response);
+			request.setAttribute("Error Message", "Invalid Login");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 }

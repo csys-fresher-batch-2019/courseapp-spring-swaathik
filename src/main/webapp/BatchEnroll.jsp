@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,7 +24,7 @@ button {
 </style>
 
 <body>
-	<jsp:include page="logout2.jsp"></jsp:include>
+	<jsp:include page="logout.jsp"></jsp:include>
 	<center>
 		<h2>AddBatches</h2>
 	</center>
@@ -54,6 +54,12 @@ button {
 				Enter EndDate:<input type="date" name="endDate"
 					placeholder="Enter endDate" required>
 			</center> <br /> <br />
+			<center>
+				<c:if test="${not empty errorMessage}">
+					<font color="red" style="font-style: normal">${errorMessage}
+				</c:if>
+				<br />
+			</center> <br />
 			<center>
 				<button type="submit">ADD</button>
 			</center>

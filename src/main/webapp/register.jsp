@@ -1,9 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@page import="com.swaathi.courseapp.dao.BatchDAO"%>
-<%@page import="com.swaathi.courseapp.domain.BatchClass"%>
-<%@page import="java.util.List"%>
-<%@page import="com.swaathi.courseapp.factory.DAOFactory"%>
+
 <html>
 <head>
 </head>
@@ -69,13 +66,14 @@ button {
 					<br /> <br /> <a href="login.jsp"> Already Registered?</a> <br />
 					<center>
 						<c:if test="${not empty errorMessage}">
-					<font color="red" style="font-style: normal">${errorMessage}
-				</c:if><br />
-							<center>
-								<button type="submit">
-									<center>Register</center>
-								</button>
-							</center>
+							<font color="red" style="font-style: normal">${errorMessage}
+						</c:if>
+						<br />
+						<center>
+							<button type="submit">
+								<center>Register</center>
+							</button>
+						</center>
 	</form>
 
 

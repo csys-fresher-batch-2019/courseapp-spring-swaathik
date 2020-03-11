@@ -1,6 +1,6 @@
 package com.swaathi.courseapp.domain;
 
-public class AdminClass {
+public class Admin {
 	private String userName;
 
 	public String getUserName() {

@@ -1,19 +1,19 @@
 package com.swaathi.courseapp.domain;
 
-public class CourseClass {
+public class Course {
 	private int courseCode;
 	private String courseName;
 	private int courseFee;
 	private int courseDurationDays;
 	private String preReq;
-	private String course_image;
+	private String courseImage;
 
-	public String getCourse_image() {
-		return course_image;
+	public String getCourseImage() {
+		return courseImage;
 	}
 
-	public void setCourse_image(String course_image) {
-		this.course_image = course_image;
+	public void setCourse_image(String courseImage) {
+		this.courseImage = courseImage;
 	}
 
 	public int getCourseCode() {
@@ -58,11 +58,10 @@ public class CourseClass {
 		this.preReq = preReq;
 	}
 
-	/////
 	@Override
 	public String toString() {
 		return "CourseClass [courseCode=" + courseCode + ", courseName=" + courseName + ", courseFee=" + courseFee
-				+ ", courseDurationDays=" + courseDurationDays + ", preReq=" + preReq + ", course_image=" + course_image
+				+ ", courseDurationDays=" + courseDurationDays + ", preReq=" + preReq + ", courseImage=" + courseImage
 				+ "]";
 	}
 

@@ -10,11 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.swaathi.courseapp.dao.CourseDAO;
-import com.swaathi.courseapp.domain.CourseClass;
+import com.swaathi.courseapp.domain.Course;
 import com.swaathi.courseapp.exception.DBException;
 
 @WebServlet("/ListAdminCourses")
@@ -23,14 +22,16 @@ import com.swaathi.courseapp.exception.DBException;
 public class ListAdminCourses extends HttpServlet {
 	@Autowired
 	CourseDAO dao;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
-			List<CourseClass> list = dao.findAll();
+			List<Course> list = dao.findAll();
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("adminCourse.jsp");
 			dispatcher.forward(request, response);
 		} catch (DBException e) {
 			e.printStackTrace();
 		}
-}
+	}
 }

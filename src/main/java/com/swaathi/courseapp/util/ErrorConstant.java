@@ -1,4 +1,4 @@
-package com.swaathi.courseapp.exception;
+package com.swaathi.courseapp.util;
 
 public class ErrorConstant {
 	public static final String INVALID_CON = "connection not establish";

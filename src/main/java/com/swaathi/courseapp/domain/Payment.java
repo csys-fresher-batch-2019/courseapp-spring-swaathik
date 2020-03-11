@@ -2,7 +2,7 @@ package com.swaathi.courseapp.domain;
 
 import java.time.LocalDateTime;
 
-public class PaymentClass {
+public class Payment {
 	private int receiptNo;
 	private int admNo;
 	private int amountPaid;

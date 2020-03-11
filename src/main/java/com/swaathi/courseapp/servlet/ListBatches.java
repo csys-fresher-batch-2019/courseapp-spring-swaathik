@@ -16,9 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.swaathi.courseapp.dao.BatchDAO;
 import com.swaathi.courseapp.dao.CourseDAO;
-import com.swaathi.courseapp.domain.BatchClass;
-import com.swaathi.courseapp.domain.CourseClass;
+import com.swaathi.courseapp.domain.Batch;
+import com.swaathi.courseapp.domain.Course;
 import com.swaathi.courseapp.exception.DBException;
+
 @WebServlet("/ListBatches")
 @SuppressWarnings("serial")
 public class ListBatches extends HttpServlet {
@@ -26,28 +27,29 @@ public class ListBatches extends HttpServlet {
 	CourseDAO dao;
 	@Autowired
 	BatchDAO b;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			String courseName = request.getParameter("course_name");
-			List<CourseClass> list = dao.findByCourseName(courseName); 
-			CourseClass course = list.get(0);
-			System.out.println("CourseDetail" +  course);
-			
-			List<BatchClass> l = b.findByCourseName(courseName);
+			List<Course> list = dao.findByCourseName(courseName);
+			Course course = list.get(0);
+			System.out.println("CourseDetail" + course);
+
+			List<Batch> l = b.findByCourseName(courseName);
 			System.out.println("BATCH_CLASS" + l);
-			 request.setAttribute("BATCH_CLASS", l);
-            request.setAttribute("COURSE_DETAIL", course);
-            HttpSession session = request.getSession();
-            //ses.setAttribute("fees",course.getCourseFee());
-        	session.setAttribute("name",courseName);
+			request.setAttribute("BATCH_CLASS", l);
+			request.setAttribute("COURSE_DETAIL", course);
+			HttpSession session = request.getSession();
+			// ses.setAttribute("fees",course.getCourseFee());
+			session.setAttribute("name", courseName);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("enroll.jsp");
 			dispatcher.forward(request, response);
-			
-			
+
 		} catch (DBException | SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-}
-	
+	}
+
 }

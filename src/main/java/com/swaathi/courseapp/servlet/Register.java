@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.swaathi.courseapp.dao.StudentDAO;
-import com.swaathi.courseapp.domain.StudentClass;
+import com.swaathi.courseapp.domain.Student;
 import com.swaathi.courseapp.exception.DBException;
 import com.swaathi.courseapp.factory.DAOFactory;
-import com.swaathi.courseapp.service.UserService;
+import com.swaathi.courseapp.service.StudentService;
 
 @SuppressWarnings("serial")
 @WebServlet("/Register")
@@ -41,7 +41,7 @@ public class Register extends HttpServlet {
 		System.out.println("Username : " + Username);
 		System.out.println("Password : " + password);
 		System.out.println("PhoneNumber : " + phoneNo);
-		StudentClass s1 = new StudentClass();
+		Student s1 = new Student();
 
 		s1.setFullName(name);
 		s1.setPhoneNo(phoneNo);
@@ -54,10 +54,10 @@ public class Register extends HttpServlet {
 		HttpSession ses = request.getSession();
 		ses.setAttribute("user", name);
 		boolean status = false;
-		
+
 		try {
 			status = validate(email, Username, phoneNo);
-			System.out.println(status);
+			System.out.println("status:" + status);
 			if (status) {
 				request.setAttribute("errorMessage", "Registered Already!!!Please Login");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
@@ -66,12 +66,12 @@ public class Register extends HttpServlet {
 
 			else {
 				System.out.println(s1);
-				UserService.registration(s1);
+				StudentService.registration(s1);
 				response.sendRedirect("login.jsp");
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("errorMessage", "Registered Already!!!Please Login");
+			request.setAttribute("errorMessage", e.getMessage());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
 			dispatcher.forward(request, response);
 
@@ -82,9 +82,9 @@ public class Register extends HttpServlet {
 	private boolean validate(String email, String Username, String phoneNo) throws DBException {
 		boolean status = false;
 		StudentDAO dao = DAOFactory.getStudentDAO();
-		List<StudentClass> list = dao.findAll();
+		List<Student> list = dao.findAll();
 
-		for (StudentClass s : list) {
+		for (Student s : list) {
 
 			String userName = s.getUserName();
 			String mailId = s.getEmailId();

@@ -13,18 +13,17 @@ import java.util.List;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.swaathi.courseapp.controller.IndexController;
 import com.swaathi.courseapp.dao.StudentDAO;
-import com.swaathi.courseapp.domain.StudentClass;
+import com.swaathi.courseapp.domain.Student;
 import com.swaathi.courseapp.exception.DBException;
-import com.swaathi.courseapp.exception.ErrorConstant;
 import com.swaathi.courseapp.util.ConnectionUtil;
+import com.swaathi.courseapp.util.ErrorConstant;
 
 @Repository
-public class StudentImplementation implements StudentDAO {
-	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(IndexController.class);
+public class StudentDAOImpl implements StudentDAO {
+	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(StudentDAOImpl.class);
 
-	public int save(StudentClass student) throws DBException {
+	public int save(Student student) throws DBException {
 		int rows = 0;
 		String sql = "insert into students(adm_no,full_name,father_name_or_guardian_name,email_id,phone_no,date_of_joining,stud_user_name,stud_password)values(adm_no_sq.nextval,?,?,?,?,?,?,?)";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -45,12 +44,12 @@ public class StudentImplementation implements StudentDAO {
 		return rows;
 	}
 
-	public void update(int admNo, String emailId) throws DBException {
+	public void update(int admissionNo, String emailId) throws DBException {
 		String sql = "update Students set email_id = ? where adm_no=?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql);) {
-			pst.setInt(1, admNo);
-			pst.setString(2, emailId);
+			pst.setString(1, emailId);
+			pst.setInt(2, admissionNo);
 			int rows = pst.executeUpdate();
 			Logger.info("No of rows updated : " + rows);
 		} catch (SQLException e) {
@@ -74,8 +73,8 @@ public class StudentImplementation implements StudentDAO {
 
 	}
 
-	public List<StudentClass> findAll() throws DBException {
-		List<StudentClass> c = new ArrayList<>();
+	public List<Student> findAll() throws DBException {
+		List<Student> c = new ArrayList<>();
 		String sql = "select adm_no,full_name,father_name_or_guardian_name,email_id,phone_no,date_of_joining,stud_user_name from students";
 		try (Connection connection = ConnectionUtil.getConnection();
 				Statement stmt = connection.createStatement();
@@ -97,7 +96,7 @@ public class StudentImplementation implements StudentDAO {
 				LocalDate dateOfJoining = rs.getDate("date_of_joining").toLocalDate();
 				Logger.debug("DateOfJoining : " + dateOfJoining);
 
-				StudentClass student = new StudentClass();
+				Student student = new Student();
 				student.setAdmNo(admNo);
 				student.setFullName(fullName);
 				student.setFatherNameOrGuardianName(fatherNameOrGuardianName);

@@ -1,10 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="com.swaathi.courseapp.factory.DAOFactory"%>
-<%@page import="com.swaathi.courseapp.dao.PaymentDAO"%>
-<%@page import="com.swaathi.courseapp.domain.PaymentClass"%>
+
 
 <html>
 <title>EnrolledStudents</title>
@@ -24,8 +20,8 @@ body {
 					<thead>
 						<tr>
 							<th>ReceiptNo</th>
+							<th>AdmissionNo</th>
 							<th>FeeAmount</th>
-							<th>AdmNo</th>
 							<th>EnrollDate And Time</th>
 							<th>CourseName</th>
 						</tr>
@@ -34,7 +30,7 @@ body {
 						<c:forEach items="${output}" var="EnrolledStudent">
 
 							<tr>
-								
+
 								<td>${EnrolledStudent.receiptNo}</td>
 								<td>${EnrolledStudent.amountPaid}</td>
 								<td>${EnrolledStudent.admNo}</td>

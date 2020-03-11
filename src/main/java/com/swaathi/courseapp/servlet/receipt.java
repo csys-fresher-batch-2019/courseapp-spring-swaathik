@@ -9,13 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.swaathi.courseapp.dao.PaymentDAO;
-import com.swaathi.courseapp.domain.PaymentClass;
+import com.swaathi.courseapp.domain.Payment;
 import com.swaathi.courseapp.exception.DBException;
 import com.swaathi.courseapp.factory.DAOFactory;
+
 @SuppressWarnings("serial")
 @WebServlet("/receipt")
 
-public class receipt extends HttpServlet {
+public class Receipt extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -27,7 +28,7 @@ public class receipt extends HttpServlet {
 		System.out.println("Admission No : " + admNo);
 		System.out.println("Amount : " + amountPaid);
 		System.out.println("Remarks : " + remark);
-		com.swaathi.courseapp.domain.PaymentClass b1 = new PaymentClass();
+		Payment b1 = new Payment();
 		b1.setAdmNo(admNo);
 		b1.setAmountPaid(amountPaid);
 		b1.setReMarks(remark);

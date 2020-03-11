@@ -2,14 +2,12 @@ package com.swaathi.courseapp.domain;
 
 import java.time.LocalDate;
 
-import com.swaathi.courseapp.util.Logger;
-
-public class StudentClass {
+public class Student {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + admNo;
+		result = prime * result + admissionNo;
 		result = prime * result + ((dateOfJoining == null) ? 0 : dateOfJoining.hashCode());
 		result = prime * result + ((emailId == null) ? 0 : emailId.hashCode());
 		result = prime * result + ((fatherNameOrGuardianName == null) ? 0 : fatherNameOrGuardianName.hashCode());
@@ -28,8 +26,8 @@ public class StudentClass {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		StudentClass other = (StudentClass) obj;
-		if (admNo != other.admNo)
+		Student other = (Student) obj;
+		if (admissionNo != other.admissionNo)
 			return false;
 		if (dateOfJoining == null) {
 			if (other.dateOfJoining != null)
@@ -73,8 +71,7 @@ public class StudentClass {
 		return fatherNameOrGuardianName;
 	}
 
-	private static final Logger LOGGER = Logger.getInstance();
-	private int admNo;
+	private int admissionNo;
 	private String fullName;
 	private String fatherNameOrGuardianName;
 	private String emailId;
@@ -104,11 +101,11 @@ public class StudentClass {
 	}
 
 	public int getAdmNo() {
-		return admNo;
+		return admissionNo;
 	}
 
 	public void setAdmNo(int admNo) {
-		this.admNo = admNo;
+		this.admissionNo = admNo;
 	}
 
 	public String getFullName() {

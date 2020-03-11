@@ -12,19 +12,18 @@ import java.util.List;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.swaathi.courseapp.controller.IndexController;
 import com.swaathi.courseapp.dao.PaymentDAO;
-import com.swaathi.courseapp.domain.PaymentClass;
+import com.swaathi.courseapp.domain.Payment;
 import com.swaathi.courseapp.exception.DBException;
-import com.swaathi.courseapp.exception.ErrorConstant;
 import com.swaathi.courseapp.util.ConnectionUtil;
+import com.swaathi.courseapp.util.ErrorConstant;
 
 @Repository
-public class PaymentImplements implements PaymentDAO {
-	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(IndexController.class);
+public class PaymentDAOImpl implements PaymentDAO {
+	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(PaymentDAOImpl.class);
 
-	public void save(PaymentClass payment) throws DBException {
-		String sql = "insert into payments(receipt_no,adm_no,amount_paid,re_marks) values(receipt_no_sq.nextval,?,?,?)";
+	public void save(Payment payment) throws DBException {
+		String sql = "insert into payments(receipt_no,adm_no,amount_paid,remarks) values(receipt_no_sq.nextval,?,?,?)";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql);) {
 			pst.setInt(1, payment.getAdmNo());
@@ -39,11 +38,11 @@ public class PaymentImplements implements PaymentDAO {
 	}
 
 	public void update(int receiptNo, String reMarks) throws DBException {
-		String sql = "update payments set re_marks=? where receipt_no=?";
+		String sql = "update payments set remarks=? where receipt_no=?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql);) {
-			pst.setInt(1, receiptNo);
-			pst.setString(2, reMarks);
+			pst.setString(1, reMarks);
+			pst.setInt(2, receiptNo);
 			int rows = pst.executeUpdate();
 			Logger.info("No of rows Updated : " + rows);
 		} catch (SQLException e) {
@@ -52,9 +51,9 @@ public class PaymentImplements implements PaymentDAO {
 		}
 	}
 
-	public List<PaymentClass> findAll() throws DBException {
-		List<PaymentClass> p = new ArrayList<>();
-		String sql = "select receipt_no,adm_no,amount_paid,re_marks,pay_date from payments";
+	public List<Payment> findAll() throws DBException {
+		List<Payment> p = new ArrayList<>();
+		String sql = "select receipt_no,adm_no,amount_paid,remarks,pay_date from payments";
 		try (Connection connection = ConnectionUtil.getConnection();
 				Statement stmt = connection.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);) {
@@ -62,10 +61,10 @@ public class PaymentImplements implements PaymentDAO {
 				int receiptNo = rs.getInt("receipt_no");
 				int amountPaid = rs.getInt("adm_no");
 				int admNo = rs.getInt("amount_paid");
-				String reMarks = rs.getString("re_marks");
+				String reMarks = rs.getString("remarks");
 				LocalDateTime payDate = rs.getTimestamp("pay_date").toLocalDateTime();
 
-				PaymentClass payment = new PaymentClass();
+				Payment payment = new Payment();
 
 				payment.setReceiptNo(receiptNo);
 				payment.setAmountPaid(amountPaid);
@@ -83,7 +82,7 @@ public class PaymentImplements implements PaymentDAO {
 	}
 
 	public void delete(int receiptNo) throws DBException {
-		String sql = "update payments set receipt_active = 0 where receipt_no=?";
+		String sql = "update payments set active = 0 where receipt_no=?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql);) {
 			pst.setInt(1, receiptNo);

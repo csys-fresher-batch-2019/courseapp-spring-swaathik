@@ -51,8 +51,14 @@ button {
 
 			<center>
 				Enter PreReq:<input type="text" name="preReq"
-					placeholder="Enter pre Requisite" required>
+					placeholder="Enter pre Requisite">
 			</center> <br /> <br />
+			<center>
+				<c:if test="${not empty errorMessage}">
+					<font color="red" style="font-style: normal">${errorMessage}
+				</c:if>
+				<br />
+			</center> <br />
 			<center>
 				<button type="submit">ADD</button>
 			</center>

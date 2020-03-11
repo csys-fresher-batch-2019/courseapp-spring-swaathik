@@ -35,12 +35,12 @@ a {
 			</center> <br /> <br />
 			<center>
 				Enter Password: <input type="password" name="password" required />
-			</center> </br>
+			</center>
 			<center>
 				<c:if test="${not empty errorMessage}">
 					<font color="red" style="font-style: normal">${errorMessage}
 				</c:if>
-				<br /> <br />
+				<br />
 				<button type="submit">
 					<center>Submit</center>
 				</button>

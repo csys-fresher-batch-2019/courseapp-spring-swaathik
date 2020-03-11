@@ -1,10 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="com.swaathi.courseapp.factory.DAOFactory"%>
-<%@page import="com.swaathi.courseapp.dao.CourseDAO"%>
-<%@page import="com.swaathi.courseapp.domain.CourseClass"%>
+
 
 <html>
 <title>CourseNames</title>
@@ -16,9 +12,8 @@ body {
 <body>
 	<font style="font-family: cursive"> <font color="black"><h2>
 				<center>CourseDetails</center>
-			</h2></font> <jsp:include page="logout.jsp"></jsp:include> <%
- 	ArrayList<CourseClass> a = (ArrayList) request.getAttribute("output");
- %>
+			</h2></font> <jsp:include page="logout.jsp"></jsp:include> 
+ 
 		<center>
 			<font color="black"><table border="1">
 					</font>

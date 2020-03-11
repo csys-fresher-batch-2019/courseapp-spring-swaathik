@@ -12,19 +12,17 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
-import com.swaathi.courseapp.controller.IndexController;
 import com.swaathi.courseapp.dao.BatchDAO;
-import com.swaathi.courseapp.domain.BatchClass;
+import com.swaathi.courseapp.domain.Batch;
 import com.swaathi.courseapp.exception.DBException;
-import com.swaathi.courseapp.exception.ErrorConstant;
 import com.swaathi.courseapp.util.ConnectionUtil;
+import com.swaathi.courseapp.util.ErrorConstant;
 
 @Repository
-public class BatchImplements implements BatchDAO {
-	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(IndexController.class);
+public class BatchDAOImpl implements BatchDAO {
+	private static final org.slf4j.Logger Logger = LoggerFactory.getLogger(BatchDAOImpl.class);
 
-	public void save(BatchClass batch) throws DBException {
+	public void save(Batch batch) throws DBException {
 		String sql = "insert into Batches(batch_code,course_code,course_name,starting_date,end_date) values(?,?,?,?,?)";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql);) {
@@ -61,8 +59,8 @@ public class BatchImplements implements BatchDAO {
 		String sql = "update batches set batch_code=? where course_code=?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql);) {
-			pst.setInt(1, courseCode);
-			pst.setInt(2, batchCode);
+			pst.setInt(1, batchCode);
+			pst.setInt(2, courseCode);
 			Logger.info(sql);
 			int rows = pst.executeUpdate();
 			Logger.info("No of rows updated : " + rows);
@@ -72,8 +70,8 @@ public class BatchImplements implements BatchDAO {
 		}
 	}
 
-	public List<BatchClass> findByCourseName(String courseName) throws SQLException, DBException {
-		List<BatchClass> b = new ArrayList<>();
+	public List<Batch> findByCourseName(String courseName) throws SQLException, DBException {
+		List<Batch> b = new ArrayList<>();
 		String sql = "select batch_code,starting_date,end_date from batches where course_name=?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -85,7 +83,7 @@ public class BatchImplements implements BatchDAO {
 					LocalDate endDate = rs.getDate("end_date").toLocalDate();
 					Logger.info("Batch Code : " + batchCode + " " + "Starting Date : " + startingDate + "End Date : "
 							+ endDate);
-					BatchClass batch = new BatchClass();
+					Batch batch = new Batch();
 					batch.setBatchCode(batchCode);
 					batch.setStartingDate(startingDate);
 					batch.setEndDate(endDate);
@@ -99,8 +97,8 @@ public class BatchImplements implements BatchDAO {
 		}
 	}
 
-	public List<BatchClass> findAll() throws DBException {
-		List<BatchClass> r = new ArrayList<>();
+	public List<Batch> findAll() throws DBException {
+		List<Batch> r = new ArrayList<>();
 		String sql = "select batch_code,course_code,course_name,starting_date,end_date from batches";
 		try (Connection connection = ConnectionUtil.getConnection();
 				Statement stmt = connection.createStatement();
@@ -113,7 +111,7 @@ public class BatchImplements implements BatchDAO {
 				LocalDate endDate = rs.getDate("end_date").toLocalDate();
 				Logger.info("Batch Code : " + batchCode + " " + "Starting Date : " + startingDate + "End Date : "
 						+ endDate + "CourseCode : " + courseCode + "CourseName : " + courseName);
-				BatchClass batch = new BatchClass();
+				Batch batch = new Batch();
 				batch.setBatchCode(batchCode);
 				batch.setStartingDate(startingDate);
 				batch.setEndDate(endDate);
